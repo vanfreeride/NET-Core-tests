@@ -141,7 +141,7 @@ namespace RcOnline.Models
                     {
                         try 
                         {
-                            RcTaskStatus status = GetTaskStatus(taskId);
+                            RcTaskStatusDto status = GetTaskStatus(taskId);
                             taskSheet.Cells[rowNum, 2].Value = status.Status;
                             taskSheet.Cells[rowNum, 4].Value = status.Total;
                             taskSheet.Cells[rowNum, 5].Value = status.Success;
@@ -158,7 +158,7 @@ namespace RcOnline.Models
             }
         }
 
-        private RcTaskStatus GetTaskStatus(int taskId)
+        private RcTaskStatusDto GetTaskStatus(int taskId)
         {
             var wc = new WebClient();
             wc.Headers.Add("Content-Type", "application/json");
@@ -166,7 +166,7 @@ namespace RcOnline.Models
 
             string response = wc.DownloadString($"{BASE_URL}/{taskId}/status");
 
-            return JsonConvert.DeserializeObject<RcTaskStatus>(response);
+            return JsonConvert.DeserializeObject<RcTaskStatusDto>(response);
         }
     }
 }

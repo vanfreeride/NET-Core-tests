@@ -2,7 +2,7 @@ using RcOnline.Enum;
 
 namespace RcOnline.Models
 {
-    internal class RcTaskStatus
+    public class RcTaskStatusDto
     {
         public int Id {get; set;}
         public int Status {get; set;}
