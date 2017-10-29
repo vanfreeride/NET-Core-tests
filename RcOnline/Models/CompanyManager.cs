@@ -16,7 +16,7 @@ public class CompanyManager{
         {
             string ogrn = "";
 
-            while(!long.TryParse(ogrn, out long foo))
+            while(!ulong.TryParse(ogrn, out ulong foo))
             {
                 Console.Write("Введите ОГРН: ");
                 ogrn = Console.ReadLine().Trim();
@@ -24,7 +24,7 @@ public class CompanyManager{
 
             string agentId = "";
 
-            while(!short.TryParse(agentId, out short bar))
+            while(!ushort.TryParse(agentId, out ushort bar))
             {
                 Console.Write("Введите AgentId: ");
                 agentId = Console.ReadLine().Trim();
