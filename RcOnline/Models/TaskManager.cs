@@ -28,9 +28,7 @@ namespace RcOnline.Models
                 var compSheet = pack.Workbook.Worksheets["Companies"];
                 var taskSheet = pack.Workbook.Worksheets["Tasks"];
 
-                int rowNum = 2;
-
-                for (; compSheet.Cells[rowNum, 2].Value != null; rowNum++)
+                for (int rowNum = 2; compSheet.Cells[rowNum, 2].Value != null; rowNum++)
                 {
                     string ogrn = compSheet.Cells[rowNum, 2].Value.ToString();
                     int agentId = compSheet.Cells[rowNum, 3].GetValue<int>();
@@ -77,9 +75,7 @@ namespace RcOnline.Models
 
         private bool TaskIsCompleted(int taskId, ExcelWorksheet taskSheet)
         {
-            int rowNum = 2;
-
-            for(;taskSheet.Cells[rowNum,1].Value != null; rowNum++)
+            for(int rowNum = 2; taskSheet.Cells[rowNum,1].Value != null; rowNum++)
             {
                 if (taskSheet.Cells[rowNum,1].GetValue<int>() == taskId)
                     return taskSheet.Cells[rowNum,2].GetValue<int>() == 3;
@@ -130,9 +126,7 @@ namespace RcOnline.Models
             {
                 var taskSheet = pack.Workbook.Worksheets["Tasks"];
 
-                int rowNum = 2;
-
-                for (; taskSheet.Cells[rowNum, 1].Value != null; rowNum++)
+                for (int rowNum = 2; taskSheet.Cells[rowNum, 1].Value != null; rowNum++)
                 {
                     int taskId = taskSheet.Cells[rowNum, 1].GetValue<int>();
                     int taskStatus = taskSheet.Cells[rowNum, 2].GetValue<int>();
@@ -141,7 +135,7 @@ namespace RcOnline.Models
                     {
                         try 
                         {
-                            RcTaskStatusDto status = GetTaskStatus(taskId);
+                            TaskStatusResponse status = GetTaskStatus(taskId);
                             taskSheet.Cells[rowNum, 2].Value = status.Status;
                             taskSheet.Cells[rowNum, 4].Value = status.Total;
                             taskSheet.Cells[rowNum, 5].Value = status.Success;
@@ -158,7 +152,7 @@ namespace RcOnline.Models
             }
         }
 
-        private RcTaskStatusDto GetTaskStatus(int taskId)
+        private TaskStatusResponse GetTaskStatus(int taskId)
         {
             var wc = new WebClient();
             wc.Headers.Add("Content-Type", "application/json");
@@ -166,7 +160,7 @@ namespace RcOnline.Models
 
             string response = wc.DownloadString($"{BASE_URL}/{taskId}/status");
 
-            return JsonConvert.DeserializeObject<RcTaskStatusDto>(response);
+            return JsonConvert.DeserializeObject<TaskStatusResponse>(response);
         }
     }
 }

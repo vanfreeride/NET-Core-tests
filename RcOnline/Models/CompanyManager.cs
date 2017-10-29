@@ -16,7 +16,7 @@ public class CompanyManager{
         {
             string ogrn = "";
 
-            while(!long.TryParse(ogrn, out long bla))
+            while(!long.TryParse(ogrn, out long foo))
             {
                 Console.Write("Введите ОГРН: ");
                 ogrn = Console.ReadLine().Trim();
@@ -24,7 +24,7 @@ public class CompanyManager{
 
             string agentId = "";
 
-            while(!short.TryParse(agentId, out short bla))
+            while(!short.TryParse(agentId, out short bar))
             {
                 Console.Write("Введите AgentId: ");
                 agentId = Console.ReadLine().Trim();
@@ -60,7 +60,6 @@ public class CompanyManager{
                 pack.Save();
                 
                 Logger.WriteLineSuccess("Успешно добавлена!\n");
-
             }
         }
     }
