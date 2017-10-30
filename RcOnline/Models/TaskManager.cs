@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using Newtonsoft.Json;
@@ -12,6 +13,7 @@ namespace RcOnline.Models
         private const string BASE_URL = "https://api.roskvartal.ru/api/bo/integration";
         private readonly string _path;
         private int startTaskCount;
+        private int reStartTaskCount;
         private readonly string _apikey;
 
         public TaskManager(string path)
@@ -73,12 +75,119 @@ namespace RcOnline.Models
             }
         }
 
+        public void RestartSuccessTasks()
+        {
+            TaskType type = GetTaskType();
+            int columnNum = type == TaskType.Accounts 
+                    ? 4
+                    : (type == TaskType.Meterings ? 5 : 6);
+
+            using (var pack = new ExcelPackage(new FileInfo(_path)))
+            {
+                var compSheet = pack.Workbook.Worksheets["Companies"];
+                var taskSheet = pack.Workbook.Worksheets["Tasks"];
+
+                for (int i = 2; compSheet.Cells[i,columnNum].Value != null; i++)
+                {
+                    int taskId = compSheet.Cells[i,columnNum].GetValue<int>();
+
+                    if (TaskIsCompletedButUnDone(taskId, taskSheet))
+                    {
+                        RestartTask(taskId);
+                        ClearTaskStatus(taskId, taskSheet);
+                        reStartTaskCount++;                        
+                    }
+                }                
+
+                if (reStartTaskCount > 0)
+                    pack.Save();                
+            }
+
+            Logger.WriteLineSuccess($"Все прошло круто! (Перезапущено {reStartTaskCount} тасок)\n");
+        }
+
+        private void ClearTaskStatus(int taskId, ExcelWorksheet taskSheet)
+        {
+            for(int rowNum = 2; taskSheet.Cells[rowNum,1].Value != null; rowNum++)
+            {
+                if (taskSheet.Cells[rowNum,1].GetValue<int>() == taskId)
+                    taskSheet.Cells[rowNum,2].Value = 0;
+            }
+        }
+
+        private TaskType GetTaskType()
+        {
+            while (true)
+            {
+                Console.WriteLine("Введите тип тасок: 0 - ЛС, 1 - ПУ, 3 - ПД: ");
+                string choice = Console.ReadLine().Trim();
+
+                switch (choice)
+                {
+                    case "0":
+                        return TaskType.Accounts;
+                    case "1":
+                        return TaskType.Meterings;
+                    case "3":
+                        return TaskType.Payments;                    
+                }
+            }
+        }
+
+        internal void RestartErrorTasks()
+        {
+            using (var pack = new ExcelPackage(new FileInfo(_path)))
+            {
+                var taskSheet = pack.Workbook.Worksheets["Tasks"];
+
+                for(int rowNum = 2; taskSheet.Cells[rowNum,1].Value != null; rowNum++)
+                {
+                    int taskId = taskSheet.Cells[rowNum,1].GetValue<int>();
+                    int status = taskSheet.Cells[rowNum,2].GetValue<int>();
+
+                    if (status == 4)
+                    {
+                        RestartTask(taskId);
+                        reStartTaskCount++;
+                    }
+                }
+            }
+
+            Logger.WriteLineSuccess($"Все прошло круто! (Перезапущено {reStartTaskCount} тасок)\n");
+        }
+
+        private void RestartTask(int taskId)
+        {
+            try
+            {
+                var wc = new WebClient();
+                wc.Headers.Add("Content-Type", "application/json");
+                wc.Headers.Add("Authorization", _apikey);
+
+                wc.DownloadString($"{BASE_URL}/{taskId}/restart");
+            }
+            catch(Exception ex){ }
+        }
+
         private bool TaskIsCompleted(int taskId, ExcelWorksheet taskSheet)
         {
             for(int rowNum = 2; taskSheet.Cells[rowNum,1].Value != null; rowNum++)
             {
                 if (taskSheet.Cells[rowNum,1].GetValue<int>() == taskId)
                     return taskSheet.Cells[rowNum,2].GetValue<int>() == 3;
+            }
+
+            return false;
+        }
+
+        private bool TaskIsCompletedButUnDone(int taskId, ExcelWorksheet taskSheet)
+        {
+            for(int rowNum = 2; taskSheet.Cells[rowNum,1].Value != null; rowNum++)
+            {
+                if (taskSheet.Cells[rowNum,1].GetValue<int>() == taskId)
+                    return taskSheet.Cells[rowNum,2].GetValue<int>() == 3 &&
+                           taskSheet.Cells[rowNum,5].GetValue<int>() > 0 &&
+                           taskSheet.Cells[rowNum,6].GetValue<int>() > 0;
             }
 
             return false;
@@ -92,6 +201,7 @@ namespace RcOnline.Models
 
             taskSheet.Cells[rowNum,1].Value = taskId;
             taskSheet.Cells[rowNum,2].Value = 0;
+            taskSheet.Cells[rowNum,3].Value = 1;
             cell.Value = taskId;
         }
 
