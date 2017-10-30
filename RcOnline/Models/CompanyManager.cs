@@ -4,7 +4,8 @@ using OfficeOpenXml;
 
 namespace RcOnline.Models
 {
-public class CompanyManager{
+    public class CompanyManager
+    {
         private readonly string _path;
 
         public CompanyManager(string path)

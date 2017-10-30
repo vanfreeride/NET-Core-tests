@@ -9,7 +9,8 @@ public class App
     public App()
     {
         _path = AppDomain.CurrentDomain.BaseDirectory
-                    .Replace("bin/Debug/netcoreapp2.0/","") + "base.xlsx";
+                    .Replace("bin/Debug/netcoreapp2.0/","")
+                    .Replace("bin\\Debug\\netcoreapp2.0\\","") + "base.xlsx";
     }
     public void Start()
         {
