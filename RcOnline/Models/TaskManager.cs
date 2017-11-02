@@ -210,7 +210,7 @@ namespace RcOnline.Models
             try
             {
                 var date = (int)type < 2 ? DateTime.Now : DateTime.Now.AddMonths(-1);
-                var obj = new {Ogrn = ogrn, RcOnlineId = agentId, Type = (int)type, Month = date.Month, Year = date.Year};
+                var obj = new {Ogrn = ogrn, AgentId = agentId, Type = (int)type, Month = date.Month, Year = date.Year};
                 var json = JsonConvert.SerializeObject(obj);
 
                 var wc = new WebClient();
