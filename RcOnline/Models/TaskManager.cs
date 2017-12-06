@@ -260,7 +260,7 @@ namespace RcOnline.Models
             }            
         }
 
-        public void UpdateTaskStatuses()
+        public void UpdateTaskStatuses(bool force = false)
         {
             using (var pack = new ExcelPackage(new FileInfo(_path)))
             {
@@ -271,7 +271,7 @@ namespace RcOnline.Models
                     int taskId = taskSheet.Cells[rowNum, 1].GetValue<int>();
                     int taskStatus = taskSheet.Cells[rowNum, 2].GetValue<int>();
 
-                    if (taskStatus != 3)
+                    if (force || taskStatus != 3)
                     {
                         try 
                         {

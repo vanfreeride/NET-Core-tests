@@ -18,9 +18,10 @@ public class App
             {
                 Console.Write("1 - Добавить контору в очередь\n" +
                             "2 - Обновить статистику\n" +
-                            "3 - Запустить таски\n" +
-                            "4 - Перезапустить таски завершенные с ошибкой\n" +
-                            "5 - Доделать успешные таски\n" +
+                            "3 - Обновить статистику (всю)\n" +
+                            "4 - Запустить таски\n" +
+                            "5 - Перезапустить таски завершенные с ошибкой\n" +
+                            "6 - Доделать успешные таски\n" +
                             "0 - Выход\n" +
                             "Ваш выбор: ");
 
@@ -46,16 +47,22 @@ public class App
                     case "3":
                     {
                         var tm = new TaskManager(_path);
-                        tm.StartPendingTasks();
+                        tm.UpdateTaskStatuses(true);
                         break;
                     }
                     case "4":
                     {
                         var tm = new TaskManager(_path);
+                        tm.StartPendingTasks();
+                        break;
+                    }
+                    case "5":
+                    {
+                        var tm = new TaskManager(_path);
                         tm.RestartErrorTasks();
                         break;
                     }    
-                    case "5":
+                    case "6":
                     {
                         var tm = new TaskManager(_path);
                         tm.RestartSuccessfulTasks();
