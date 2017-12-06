@@ -58,7 +58,7 @@ public class App
                     case "5":
                     {
                         var tm = new TaskManager(_path);
-                        tm.RestartSuccessTasks();
+                        tm.RestartSuccessfulTasks();
                         break;
                     }                  
 

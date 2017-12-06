@@ -32,7 +32,7 @@ namespace RcOnline.Models
 
                 for (int rowNum = 2; compSheet.Cells[rowNum, 2].Value != null; rowNum++)
                 {
-                    string ogrn = compSheet.Cells[rowNum, 2].Value.ToString();
+                    string ogrn = compSheet.Cells[rowNum, 2].Text.Trim();
                     int agentId = compSheet.Cells[rowNum, 3].GetValue<int>();
                     var accCell = compSheet.Cells[rowNum, 4];
                     var mdCell = compSheet.Cells[rowNum, 5];
@@ -75,7 +75,7 @@ namespace RcOnline.Models
             }
         }
 
-        public void RestartSuccessTasks()
+        public void RestartSuccessfulTasks()
         {
             TaskType type = GetTaskType();
             int columnNum = type == TaskType.Accounts 
@@ -93,9 +93,12 @@ namespace RcOnline.Models
 
                     if (TaskIsCompletedButUnDone(taskId, taskSheet))
                     {
-                        RestartTask(taskId);
-                        ClearTaskStatus(taskId, taskSheet);
-                        reStartTaskCount++;                        
+                        if (RestartTask(taskId))
+                        {
+                            ClearTaskStatus(taskId, taskSheet);
+                            IncrementTaskAttemps(taskSheet, taskId);
+                            reStartTaskCount++;                        
+                        }
                     }
                 }                
 
@@ -147,16 +150,35 @@ namespace RcOnline.Models
 
                     if (status == 4)
                     {
-                        RestartTask(taskId);
-                        reStartTaskCount++;
+                        if(RestartTask(taskId))
+                        {
+                            reStartTaskCount++;
+                            IncrementTaskAttemps(taskSheet, taskId);
+                        }
                     }
                 }
+                
+                if (reStartTaskCount > 0)
+                    pack.Save();
             }
 
             Logger.WriteLineSuccess($"Все прошло круто! (Перезапущено {reStartTaskCount} тасок)\n");
         }
 
-        private void RestartTask(int taskId)
+        private void IncrementTaskAttemps(ExcelWorksheet taskSheet, int taskId)
+        {
+            for(int rowNum = 2; taskSheet.Cells[rowNum,1].Value != null; rowNum++)
+            {
+                if (taskSheet.Cells[rowNum,1].GetValue<int>() == taskId)
+                    {
+                        int attempts = taskSheet.Cells[rowNum,3].GetValue<int>();
+                        taskSheet.Cells[rowNum,3].Value = ++attempts;
+                        break;
+                    }
+            }
+        }
+
+        private bool RestartTask(int taskId)
         {
             try
             {
@@ -165,8 +187,13 @@ namespace RcOnline.Models
                 wc.Headers.Add("Authorization", _apikey);
 
                 wc.DownloadString($"{BASE_URL}/{taskId}/restart");
+
+                return true;
             }
-            catch(Exception ex){ }
+            catch(Exception)
+            {
+                return false;
+            }
         }
 
         private bool TaskIsCompleted(int taskId, ExcelWorksheet taskSheet)
@@ -185,9 +212,12 @@ namespace RcOnline.Models
             for(int rowNum = 2; taskSheet.Cells[rowNum,1].Value != null; rowNum++)
             {
                 if (taskSheet.Cells[rowNum,1].GetValue<int>() == taskId)
-                    return taskSheet.Cells[rowNum,2].GetValue<int>() == 3 &&
-                           taskSheet.Cells[rowNum,5].GetValue<int>() > 0 &&
-                           taskSheet.Cells[rowNum,6].GetValue<int>() > 0;
+                {
+                    int status = taskSheet.Cells[rowNum, 2].GetValue<int>();
+                    int success = taskSheet.Cells[rowNum, 5].GetValue<int>();
+                    int errors = taskSheet.Cells[rowNum, 6].GetValue<int>();
+                    return status == 3 && success > 0 && errors > 0;
+                }
             }
 
             return false;
@@ -224,7 +254,7 @@ namespace RcOnline.Models
 
                 return idObj.IntegrationId;            
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 return null;
             }            
@@ -252,7 +282,7 @@ namespace RcOnline.Models
                             taskSheet.Cells[rowNum, 6].Value = status.Errors;
                             taskSheet.Cells[rowNum, 7].Value = status.ErrorMessage;
                         }
-                        catch(Exception ex){}
+                        catch(Exception){}
                     }
                 }
 
