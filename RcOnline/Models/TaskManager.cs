@@ -87,8 +87,11 @@ namespace RcOnline.Models
                 var compSheet = pack.Workbook.Worksheets["Companies"];
                 var taskSheet = pack.Workbook.Worksheets["Tasks"];
 
-                for (int i = 2; compSheet.Cells[i,columnNum].Value != null; i++)
+                for (int i = 2; compSheet.Cells[i,1].Value != null; i++)
                 {
+                    if (compSheet.Cells[i,columnNum].Value == null)
+                        continue;
+
                     int taskId = compSheet.Cells[i,columnNum].GetValue<int>();
 
                     if (TaskIsCompletedButUnDone(taskId, taskSheet))
