@@ -15,11 +15,18 @@ namespace mvc.Controllers
             return View();
         }
 
+        
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
 
             return View();
+        }
+
+        [Route("my-fucking-route")]
+        public IActionResult Test()
+        {
+            return Json(new {Count = 10, StringField = "bla bla", Time = DateTime.Now});
         }
 
         public IActionResult Contact()
