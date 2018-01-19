@@ -5,3 +5,12 @@ blat/obj/
 .vscode/
 mvc/bin/
 mvc/obj/
+ExcelSplit/.vs/*
+ExcelSplit/bin/*
+ExcelSplit/obj/*
+StringFinder/bin/*
+StringFinder/obj/*
+StringFinder_net452/StringFinder/.vs/*
+StringFinder_net452/StringFinder/StringFinder/bin/*
+StringFinder_net452/StringFinder/StringFinder/obj/*
+StringFinder/.vs/*
