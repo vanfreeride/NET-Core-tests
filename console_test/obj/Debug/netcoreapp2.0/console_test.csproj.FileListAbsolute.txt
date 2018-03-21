@@ -1,0 +1,10 @@
+/home/van/Dev/console_test/bin/Debug/netcoreapp2.0/console_test.deps.json
+/home/van/Dev/console_test/bin/Debug/netcoreapp2.0/console_test.runtimeconfig.json
+/home/van/Dev/console_test/bin/Debug/netcoreapp2.0/console_test.runtimeconfig.dev.json
+/home/van/Dev/console_test/bin/Debug/netcoreapp2.0/console_test.dll
+/home/van/Dev/console_test/bin/Debug/netcoreapp2.0/console_test.pdb
+/home/van/Dev/console_test/obj/Debug/netcoreapp2.0/console_test.csproj.CoreCompileInputs.cache
+/home/van/Dev/console_test/obj/Debug/netcoreapp2.0/console_test.AssemblyInfoInputs.cache
+/home/van/Dev/console_test/obj/Debug/netcoreapp2.0/console_test.AssemblyInfo.cs
+/home/van/Dev/console_test/obj/Debug/netcoreapp2.0/console_test.dll
+/home/van/Dev/console_test/obj/Debug/netcoreapp2.0/console_test.pdb
