@@ -670,11 +670,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/van/Dev/console_test/console_test.csproj",
-      "projectName": "console_test",
-      "projectPath": "/home/van/Dev/console_test/console_test.csproj",
+      "projectUniqueName": "/home/van/Dev/snake/snake.csproj",
+      "projectName": "snake",
+      "projectPath": "/home/van/Dev/snake/snake.csproj",
       "packagesPath": "/home/van/.nuget/packages/",
-      "outputPath": "/home/van/Dev/console_test/obj/",
+      "outputPath": "/home/van/Dev/snake/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/share/dotnet/sdk/NuGetFallbackFolder"

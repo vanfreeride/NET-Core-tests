@@ -1,0 +1,10 @@
+/home/van/Dev/snake/bin/Debug/netcoreapp2.0/snake.deps.json
+/home/van/Dev/snake/bin/Debug/netcoreapp2.0/snake.runtimeconfig.json
+/home/van/Dev/snake/bin/Debug/netcoreapp2.0/snake.runtimeconfig.dev.json
+/home/van/Dev/snake/bin/Debug/netcoreapp2.0/snake.dll
+/home/van/Dev/snake/bin/Debug/netcoreapp2.0/snake.pdb
+/home/van/Dev/snake/obj/Debug/netcoreapp2.0/snake.csproj.CoreCompileInputs.cache
+/home/van/Dev/snake/obj/Debug/netcoreapp2.0/snake.AssemblyInfoInputs.cache
+/home/van/Dev/snake/obj/Debug/netcoreapp2.0/snake.AssemblyInfo.cs
+/home/van/Dev/snake/obj/Debug/netcoreapp2.0/snake.dll
+/home/van/Dev/snake/obj/Debug/netcoreapp2.0/snake.pdb
