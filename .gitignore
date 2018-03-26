@@ -14,3 +14,5 @@ StringFinder_net452/StringFinder/.vs/*
 StringFinder_net452/StringFinder/StringFinder/bin/*
 StringFinder_net452/StringFinder/StringFinder/obj/*
 StringFinder/.vs/*
+#*/bin/*
+#*/obj/*
