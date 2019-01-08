@@ -1,0 +1,22 @@
+version: "3"
+services:
+  web:
+    container_name: web
+    image: webapi
+    restart: always
+    ports:
+      - "8080:80"
+  db:
+    container_name: db
+    image: mysql/mysql-server
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - /home/van/Dev/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=mypassword
+      - MYSQL_ROOT_HOST=%
+     # - MYSQL_DATABASE=Automatic creation of the DB
+     # - MYSQL_USER=User with ALL privilege to ‘MYSQL_DATABASE’
+     # - MYSQL_PASSWORD=Password of ‘MYSQL_USER’

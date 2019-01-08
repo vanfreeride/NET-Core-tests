@@ -10,9 +10,9 @@ namespace webapi.infrastructure.Repositories
     {
         private MyDb db;
 
-        public BookRepository()
+        public BookRepository(MyDb db)
         {
-            db = new MyDb();
+            this.db = db;
         }
 
         public void Add(Book book)

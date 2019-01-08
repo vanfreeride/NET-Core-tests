@@ -8,6 +8,7 @@ using webapi.core.Services;
 
 namespace webapi.Controllers
 {
+    [Route("")]
     [Route("api/[controller]")]
     public class BooksController : Controller
     {

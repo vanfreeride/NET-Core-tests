@@ -1,0 +1,8 @@
+webapi/bin/
+webapi/obj/
+webapi.infrastructure/bin/
+webapi.infrastructure/obj/
+webapi.core/bin/
+webapi.core/obj/
+webapi.tests/bin/
+webapi.tests/obj/
