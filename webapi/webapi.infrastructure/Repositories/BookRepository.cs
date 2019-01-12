@@ -15,22 +15,28 @@ namespace webapi.infrastructure.Repositories
             this.db = db;
         }
 
-        public void Add(Book book)
+        public object Add(Book book)
         {
-            db.Books.Add(new BookRow { Title = book.Title, Price = book.Price});
+            var bookRow = new BookRow { Title = book.Title, Price = book.Price};
+
+            db.Books.Add(bookRow);
 
             db.SaveChanges();
+
+            return bookRow.Id;
         }
 
         public Book[] Get()
         {
-            return db.Books.Select(b => new Book(b.Title, b.Price)).ToArray();
+            return db.Books.Select(b => new Book(b.Title, b.Price, null)).ToArray();
         }
 
-        public Book GetById(int id)
+        public Book GetById(object oid)
         {
+            var id = (int)oid;
+
             return db.Books.Where(b => b.Id == id)
-                           .Select(b => new Book(b.Title, b.Price))
+                           .Select(b => new Book(b.Title, b.Price, null))
                            .FirstOrDefault();
         }
     }

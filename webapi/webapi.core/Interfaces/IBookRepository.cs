@@ -5,7 +5,7 @@ namespace webapi.core.Interfaces
     public interface IBookRepository
     {
         Book[] Get();
-        Book GetById(int id);
-        void Add(Book book);
+        Book GetById(object id);
+        object Add(Book book);
     }
 }

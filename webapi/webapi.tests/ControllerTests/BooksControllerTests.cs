@@ -15,7 +15,7 @@ namespace webapi.tests.ControllerTests
         [Test]
         public void GetAllBooksTest() 
         {
-            var books = new [] { new Book("War and Peace", 10.0M)};
+            var books = new [] { new Book("War and Peace", 10.0M, "War. Peace. Peace. War")};
 
             var mockRepo = Mock.Of<IBookRepository>(r => r.Get() == books);
 
@@ -33,7 +33,7 @@ namespace webapi.tests.ControllerTests
         [Test]
         public void GetBookByIdTest() 
         {
-            var book = new Book("War and Peace", 10.0M);
+            var book = new Book("War and Peace", 10.0M, "War. Peace. Peace. War");
 
             var mockRepo = Mock.Of<IBookRepository>(r => r.GetById(1) == book);
 
@@ -45,6 +45,7 @@ namespace webapi.tests.ControllerTests
 
             Assert.AreEqual("War and Peace", result.Title);
             Assert.AreEqual(10.0M, result.Price);
+            Assert.AreEqual("War. Peace. Peace. War", result.Description);
         }
     }
 }

@@ -1,8 +1,14 @@
 FROM microsoft/dotnet:sdk AS build-env
 WORKDIR /app
 
-COPY . ./
+COPY *.sln ./
+COPY webapi/webapi.csproj webapi/
+COPY webapi.infrastructure/webapi.infrastructure.csproj webapi.infrastructure/
+COPY webapi.core/webapi.core.csproj webapi.core/
+COPY webapi.tests/webapi.tests.csproj webapi.tests/
 RUN dotnet restore
+
+COPY . ./
 RUN dotnet publish webapi/webapi.csproj -c Release -o /app/out
 
 # Build runtime image

@@ -22,7 +22,7 @@ namespace webapi.core.Services
 
         public void Add()
         {
-            repo.Add(new Book("Added book", 666M));
+            repo.Add(new Book("Added book", 666M, "This is test description"));
         }
 
         public Book GetById(int id)
