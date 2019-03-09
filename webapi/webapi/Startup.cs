@@ -30,12 +30,12 @@ namespace webapi
         {
             services.AddMvc();
             services.AddScoped<BookService, BookService>();
-            //services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IBookRepository, BookRepository>();
 
-            services.AddScoped<IBookRepository, BookMongoDbRepository>();
+            //services.AddScoped<IBookRepository, BookMongoDbRepository>();
 
-            // services.AddDbContext<MyDb>(options =>
-            //     options.UseMySQL(Configuration.GetConnectionString("MyDb")));
+            services.AddDbContext<MyDb>(options =>
+                options.UseMySQL(Configuration.GetConnectionString("MyDb")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

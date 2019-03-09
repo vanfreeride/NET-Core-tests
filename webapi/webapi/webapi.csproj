@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\webapi.core\webapi.core.csproj" />
     <ProjectReference Include="..\webapi.infrastructure\webapi.infrastructure.csproj" />
   </ItemGroup>

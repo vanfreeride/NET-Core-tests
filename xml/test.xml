@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<el>
+  <to>Tove</to>
+  <from>Jani</from>
+  <heading>Reminder</heading>
+  <notes>
+	<note><text>Don't forget me this weekend!</text></note>
+	<note><text>Don't forget me this weekend2!</text></note>
+	<note><text>Don't forget me this weekend3!</text></note>
+  </notes>
+  <shit>sdfsdf</shit>
+</el>
