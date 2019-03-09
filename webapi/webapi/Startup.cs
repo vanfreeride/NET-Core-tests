@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Options;
 using webapi.core.Interfaces;
 using webapi.core.Services;
 using webapi.infrastructure.Db;
+using webapi.infrastructure.DbObjects;
 using webapi.infrastructure.Repositories;
 
 namespace webapi
@@ -35,7 +37,14 @@ namespace webapi
             //services.AddScoped<IBookRepository, BookMongoDbRepository>();
 
             services.AddDbContext<MyDb>(options =>
-                options.UseMySQL(Configuration.GetConnectionString("MyDb")));
+                options.UseMySql(Configuration.GetConnectionString("MyDb")));
+
+            services.AddDbContext<IdentityDb>(options =>
+                options.UseMySql(Configuration.GetConnectionString("IdentityDb")));
+                
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<IdentityDb>()
+                .AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +55,7 @@ namespace webapi
                 app.UseDeveloperExceptionPage();
             //}
 
+            app.UseAuthentication();
             app.UseMvc();
 
         }

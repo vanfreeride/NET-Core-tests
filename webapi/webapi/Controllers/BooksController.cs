@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using webapi.core.Interfaces;
 using webapi.core.Services;
@@ -27,6 +28,7 @@ namespace webapi.Controllers
             return Json(result);
         }
 
+        [Authorize]
         [HttpGet]
         [Route("add")]
         public JsonResult Add()
