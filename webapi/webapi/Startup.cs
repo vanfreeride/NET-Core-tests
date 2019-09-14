@@ -32,9 +32,9 @@ namespace webapi
         {
             services.AddMvc();
             services.AddScoped<BookService, BookService>();
-            services.AddScoped<IBookRepository, BookRepository>();
+            //.AddScoped<IBookRepository, BookRepository>();
 
-            //services.AddScoped<IBookRepository, BookMongoDbRepository>();
+            services.AddScoped<IBookRepository, BookMongoDbRepository>();
 
             services.AddDbContext<MyDb>(options =>
                 options.UseMySql(Configuration.GetConnectionString("MyDb")));

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,42 +10,47 @@ using webapi.core.Services;
 
 namespace webapi.Controllers
 {
-    [Route("")]
-    [Route("api/[controller]")]
+    [Route ("")]
+    [Route ("api/[controller]")]
     public class BooksController : Controller
     {
         private BookService serv;
 
-        public BooksController(BookService serv)
+        public BooksController (BookService serv)
         {
             this.serv = serv;
         }
 
-        [HttpGet]
-        public JsonResult Get()
+        [HttpGet("get")]
+        public JsonResult Get ()
         {
-            var result = serv.Get();
+            var result = serv.Get ();
 
-            return Json(result);
+            return Json (result);
         }
 
-        [Authorize]
-        [HttpGet]
-        [Route("add")]
-        public JsonResult Add()
+        //[Authorize]
+        [HttpGet("add")]
+        public JsonResult Add ()
         {
-            serv.Add();
+            serv.Add ();
 
-            return Json(true);
+            return Json (true);
         }
 
-        [HttpGet]
-        [Route("{id}")]
-        public JsonResult GetById(int id)
+        [HttpGet("{id}")]
+        public JsonResult GetById (int id)
         {
-            var result = serv.GetById(id);
+            var result = serv.GetById (id);
 
-            return Json(result);
+            return Json (result);
+        }
+
+        [HttpPost]
+        [Route ("test")]
+        public async Task Test (int id)
+        {
+            Thread.Sleep (200);
         }
     }
 }

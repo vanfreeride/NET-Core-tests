@@ -5,6 +5,7 @@ using MongoDB.Driver;
 using webapi.core.DomainModels;
 using webapi.core.Interfaces;
 using webapi.infrastructure.DbObjects;
+using System;
 
 namespace webapi.infrastructure.Repositories
 {
@@ -24,7 +25,13 @@ namespace webapi.infrastructure.Repositories
         public object Add(Book book)
         {
             var row = new BookRowMongo 
-            { Title = book.Title, Price = book.Price, Description = book.Description };
+            { 
+                Title = book.Title, 
+                Price = book.Price, 
+                Description = book.Description ,
+                Dic = new System.Collections.Generic.Dictionary<string, string> {{"ssd", "sdsdsds"}, {"ssd2", "sdsdsds2"}},
+                Guid = Guid.NewGuid()
+            };
 
             books.InsertOne(row);
 
@@ -33,7 +40,9 @@ namespace webapi.infrastructure.Repositories
 
         public Book[] Get()
         {
-            return books.Find<BookRowMongo>(b => true).ToList()
+            var bks = books.Find<BookRowMongo>(b => true).ToList();
+
+            return bks
                     .Select(row => new Book(row.Title, row.Price, row.Description)).ToArray();
         }
 

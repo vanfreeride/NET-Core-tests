@@ -1,6 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace webapi.infrastructure.DbObjects
 {
@@ -16,13 +17,13 @@ namespace webapi.infrastructure.DbObjects
     {
         public ObjectId Id { get; set; }
 
-        [BsonElement("Price")]
         public decimal Price { get;set; }
 
-        [BsonElement("Title")]
         public string Title { get; set;}
 
-        [BsonElement("Description")]
         public string Description { get; set;}
+
+        public Dictionary<string, string> Dic { get; set; }
+        public Guid Guid { get; set; }
     }
 }
